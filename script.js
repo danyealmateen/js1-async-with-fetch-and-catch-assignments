@@ -30,7 +30,7 @@
 // }
 // getDogs();
 
-//2.Hämta 10 random bilder av pomeranians och visa på webbsidan.
+// 2.Hämta 10 random bilder av pomeranians och visa på webbsidan.
 // function getPoms() {
 //   let url = "https://dog.ceo/api/breed/pomeranian/images/random/10";
 //   fetch(url)
@@ -49,7 +49,7 @@
 // }
 // getPoms();
 
-//3.Hämta info om ett random öl och presentera beskrivningen och ‘food pairing’ i html-element.
+// //3.Hämta info om ett random öl och presentera beskrivningen och ‘food pairing’ i html-element.
 // function getBeer() {
 //   let url = "https://api.punkapi.com/v2/beers";
 //   fetch(url)
@@ -66,50 +66,86 @@
 // }
 // getBeer();
 
-//4. Hämta info om ett random öl och visa namnet på ölen och en bild på ölen i HTML-element.
-function displayBeer() {
-  let url = "https://api.punkapi.com/v2/beers";
+// //4. Hämta info om ett random öl och visa namnet på ölen och en bild på ölen i HTML-element.
+// function displayBeer() {
+//   let url = "https://api.punkapi.com/v2/beers";
+//   fetch(url)
+//     .then((response) => response.json())
+//     .then((data) => {
+//       let displayBeerDiv = document.createElement("div");
+//       displayBeerDiv.innerHTML = `Name of the beer is ${data[0].name} <img id="beer" src="${data[0].image_url}" alt="picofbeerbottle"/>`;
+//       document.body.appendChild(displayBeerDiv);
+//       //name
+//       //image_url
+//       console.log(data[0]);
+//     })
+//     .catch((error) => {
+//       let errorMessage = document.createElement("p");
+//       errorMessage.innerHTML = `ERROR ERROR --> ${error}`;
+//       document.body.appendChild(errorMessage);
+//       console.log(`ERROR ERROR --> {error}`);
+//     });
+// }
+// displayBeer();
+
+// //5. Hämta info om ett random öl och visa namnen på alla ingredienser i HTML-element.
+// function ingBeer() {
+//   let url = "https://api.punkapi.com/v2/beers";
+//   fetch(url)
+//     .then((response) => response.json())
+//     .then((data) => {
+//       let theIngBeer = document.createElement("div");
+
+//       data[0].ingredients.hops.forEach((hop) => {
+//         let theHops = document.createElement("p");
+//         theHops.innerHTML = `Here are the hops ingredients: ${hop.name}<hr>`;
+//         document.body.appendChild(theHops);
+//         console.log(hop.name);
+//       });
+//       document.body.appendChild(theIngBeer);
+//       console.log(data);
+//     })
+//     .catch((error) => {
+//       let errorMessage = document.createElement("div");
+//       errorMessage.innerHTML = `ERROR ERROR ==> ${error}`;
+//       document.body.appendChild(errorMessage);
+//       console.log(`ERROR ERROR! ${error}`);
+//     });
+// }
+// ingBeer();
+
+//ASYNC MED FETCH UPPGIFTER
+//1.
+//Använd ett form i html:en.
+//Använd infon från formuläret för att sätta ihop rätt url.
+//Använd i url:en i fetch.
+//Visa datan i DOM:en
+//Visa ett error i DOM:en om något går fel. (via catch)
+//Hämta 10 random bilder av en hundras som användaren får ange. Visa alla bilder på webbsidan.
+
+let button = document.getElementById("button");
+
+button.addEventListener("click", (prevent) => {
+  prevent.preventDefault();
+  getInfoFromApi();
+});
+
+function getInfoFromApi() {
+  let input = document.getElementById("input").value;
+  let url = `https://dog.ceo/api/breed/${input}/images/random/10`;
   fetch(url)
     .then((response) => response.json())
     .then((data) => {
-      let displayBeerDiv = document.createElement("div");
-      displayBeerDiv.innerHTML = `Name of the beer is ${data[0].name} <img id="beer" src="${data[0].image_url}" alt="picofbeerbottle"/>`;
-      document.body.appendChild(displayBeerDiv);
-      //name
-      //image_url
-      console.log(data[0]);
+      data.message.forEach((mess) => {
+        let creatingDiv = document.createElement("div");
+        creatingDiv.innerHTML = `<img id="pic" src="${mess}"/>`;
+        document.body.appendChild(creatingDiv);
+      });
     })
     .catch((error) => {
-      let errorMessage = document.createElement("p");
+      console.log(error);
+      let errorMessage = document.createElement("h3");
       errorMessage.innerHTML = `ERROR ERROR --> ${error}`;
       document.body.appendChild(errorMessage);
-      console.log(`ERROR ERROR --> {error}`);
     });
 }
-displayBeer();
-
-//5. Hämta info om ett random öl och visa namnen på alla ingredienser i HTML-element.
-function ingBeer() {
-  let url = "https://api.punkapi.com/v2/beers";
-  fetch(url)
-    .then((response) => response.json())
-    .then((data) => {
-      let theIngBeer = document.createElement("div");
-
-      data[0].ingredients.hops.forEach((hop) => {
-        let theHops = document.createElement("p");
-        theHops.innerHTML = `Here are the hops ingredients: ${hop.name}<hr>`;
-        document.body.appendChild(theHops);
-        console.log(hop.name);
-      });
-      document.body.appendChild(theIngBeer);
-      console.log(data);
-    })
-    .catch((error) => {
-      let errorMessage = document.createElement("div");
-      errorMessage.innerHTML = `ERROR ERROR ==> ${error}`;
-      document.body.appendChild(errorMessage);
-      console.log(`ERROR ERROR! ${error}`);
-    });
-}
-ingBeer();
