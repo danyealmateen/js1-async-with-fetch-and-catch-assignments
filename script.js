@@ -57,8 +57,6 @@ function getBeer() {
     .then((data) => {
       let beerDiv = document.createElement("div");
       beerDiv.innerHTML = `<div>${data[0].description}</div><hr>${data[0].food_pairing}`;
-      //description kan du köra direkt
-      //food_pairing har 3 arrays
       document.body.appendChild(beerDiv);
       console.log(data);
     })
