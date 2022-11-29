@@ -87,3 +87,29 @@ function displayBeer() {
     });
 }
 displayBeer();
+
+//5. Hämta info om ett random öl och visa namnen på alla ingredienser i HTML-element.
+function ingBeer() {
+  let url = "https://api.punkapi.com/v2/beers";
+  fetch(url)
+    .then((response) => response.json())
+    .then((data) => {
+      let theIngBeer = document.createElement("div");
+
+      data[0].ingredients.hops.forEach((hop) => {
+        let theHops = document.createElement("p");
+        theHops.innerHTML = `Here are the hops ingredients: ${hop.name}<hr>`;
+        document.body.appendChild(theHops);
+        console.log(hop.name);
+      });
+      document.body.appendChild(theIngBeer);
+      console.log(data);
+    })
+    .catch((error) => {
+      let errorMessage = document.createElement("div");
+      errorMessage.innerHTML = `ERROR ERROR ==> ${error}`;
+      document.body.appendChild(errorMessage);
+      console.log(`ERROR ERROR! ${error}`);
+    });
+}
+ingBeer();
