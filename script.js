@@ -123,29 +123,59 @@
 //Visa ett error i DOM:en om något går fel. (via catch)
 //Hämta 10 random bilder av en hundras som användaren får ange. Visa alla bilder på webbsidan.
 
+// let button = document.getElementById("button");
+
+// button.addEventListener("click", (prevent) => {
+//   prevent.preventDefault();
+//   emptyContainer();
+//   getInfoFromApi();
+// });
+
+// function getInfoFromApi() {
+//   let input = document.getElementById("input").value;
+//   let inputNum = document.getElementById("inputNum").value;
+//   let url = `https://dog.ceo/api/breed/${input}/images/random/${inputNum}`;
+//   fetch(url)
+//     .then((response) => response.json())
+//     .then((data) => {
+//       data.message.forEach((mess) => {
+//         let creatingDiv = document.createElement("div");
+//         creatingDiv.innerHTML = `<img id="pic" src="${mess}"/>`;
+//         document.getElementById("container").appendChild(creatingDiv);
+//       });
+//     })
+//     .catch((error) => {
+//       console.log(error);
+//       let errorMessage = document.createElement("h3");
+//       errorMessage.innerHTML = `ERROR ERROR --> ${error}`;
+//       document.body.appendChild(errorMessage);
+//     });
+// }
+
+// function emptyContainer() {
+//   document.getElementById("container").innerHTML = "";
+// }
+
+//2. Låt användaren söka på en kategori och hämta ett random skämt i den kategorin. Visa skämtet.
+
 let button = document.getElementById("button");
 
 button.addEventListener("click", (prevent) => {
   prevent.preventDefault();
-  getInfoFromApi();
+  getChuckJokes();
+  console.log("click");
 });
 
-function getInfoFromApi() {
+function getChuckJokes() {
   let input = document.getElementById("input").value;
-  let url = `https://dog.ceo/api/breed/${input}/images/random/10`;
+  let url = `https://api.chucknorris.io/jokes/random?category=${input}`;
+  console.log(input);
   fetch(url)
     .then((response) => response.json())
     .then((data) => {
-      data.message.forEach((mess) => {
-        let creatingDiv = document.createElement("div");
-        creatingDiv.innerHTML = `<img id="pic" src="${mess}"/>`;
-        document.body.appendChild(creatingDiv);
-      });
-    })
-    .catch((error) => {
-      console.log(error);
-      let errorMessage = document.createElement("h3");
-      errorMessage.innerHTML = `ERROR ERROR --> ${error}`;
-      document.body.appendChild(errorMessage);
+      let jokeDiv = document.createElement("div");
+      jokeDiv.innerHTML = `${data.value}`;
+      document.body.appendChild(jokeDiv);
+      console.log(data.value);
     });
 }
