@@ -50,18 +50,40 @@
 // getPoms();
 
 //3.Hämta info om ett random öl och presentera beskrivningen och ‘food pairing’ i html-element.
-function getBeer() {
+// function getBeer() {
+//   let url = "https://api.punkapi.com/v2/beers";
+//   fetch(url)
+//     .then((response) => response.json())
+//     .then((data) => {
+//       let beerDiv = document.createElement("div");
+//       beerDiv.innerHTML = `<div>${data[0].description}</div><hr>${data[0].food_pairing}`;
+//       document.body.appendChild(beerDiv);
+//       console.log(data);
+//     })
+//     .catch((error) => {
+//       console.log(`FAILED ERROR ==> ${error}`);
+//     });
+// }
+// getBeer();
+
+//4. Hämta info om ett random öl och visa namnet på ölen och en bild på ölen i HTML-element.
+function displayBeer() {
   let url = "https://api.punkapi.com/v2/beers";
   fetch(url)
     .then((response) => response.json())
     .then((data) => {
-      let beerDiv = document.createElement("div");
-      beerDiv.innerHTML = `<div>${data[0].description}</div><hr>${data[0].food_pairing}`;
-      document.body.appendChild(beerDiv);
-      console.log(data);
+      let displayBeerDiv = document.createElement("div");
+      displayBeerDiv.innerHTML = `Name of the beer is ${data[0].name} <img id="beer" src="${data[0].image_url}" alt="picofbeerbottle"/>`;
+      document.body.appendChild(displayBeerDiv);
+      //name
+      //image_url
+      console.log(data[0]);
     })
     .catch((error) => {
-      console.log(`FAILED ERROR ==> ${error}`);
+      let errorMessage = document.createElement("p");
+      errorMessage.innerHTML = `ERROR ERROR --> ${error}`;
+      document.body.appendChild(errorMessage);
+      console.log(`ERROR ERROR --> {error}`);
     });
 }
-getBeer();
+displayBeer();
