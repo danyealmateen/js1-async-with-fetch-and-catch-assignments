@@ -265,31 +265,70 @@
 //Låt användaren välja ett datum och visa namnet på alla öl som har bryggts innan det datumet.//brewed_before
 //https://api.punkapi.com/v2/beers?brewed_before=11-2012
 
+// let button = document.getElementById("button");
+// let dateDiv = document.createElement("div");
+
+// button.addEventListener("click", (event) => {
+//   event.preventDefault();
+//   console.log("clicked!");
+//   beerDate();
+//   clearContainer();
+// });
+
+// function beerDate() {
+//   let input = document.getElementById("input").value;
+//   let url = `https://api.punkapi.com/v2/beers?brewed_before=?${input}`;
+//   fetch(url)
+//     .then((response) => response.json())
+//     .then((data) => {
+//       data.forEach((obj) => {
+//         let datePara = document.createElement("p");
+//         datePara.innerHTML = `${obj.name}`;
+//         dateDiv.appendChild(datePara);
+//         document.body.appendChild(dateDiv);
+//       });
+//     });
+// }
+
+// function clearContainer() {
+//   dateDiv.innerHTML = "";
+// }
+
+//BORED API
+//1. Låt en användare söka på en typ av aktivitet. Hämta en random aktivitet och visa i DOM:en
+//http://www.boredapi.com/api/activity?type=recreational
+
 let button = document.getElementById("button");
-let dateDiv = document.createElement("div");
+let activeDiv = document.createElement("div");
 
 button.addEventListener("click", (event) => {
   event.preventDefault();
-  console.log("clicked!");
-  beerDate();
   clearContainer();
+  getActivity();
 });
 
-function beerDate() {
+function getActivity() {
   let input = document.getElementById("input").value;
-  let url = `https://api.punkapi.com/v2/beers?brewed_before=?${input}`;
+  let inputNumber = document.getElementById("inputNumber").value;
+  let url = `http://www.boredapi.com/api/activity?type=${input}&participants=${inputNumber}`;
+  console.log(inputNumber);
   fetch(url)
     .then((response) => response.json())
     .then((data) => {
-      data.forEach((obj) => {
-        let datePara = document.createElement("p");
-        datePara.innerHTML = `${obj.name}`;
-        dateDiv.appendChild(datePara);
-        document.body.appendChild(dateDiv);
-      });
+      let activePara = document.createElement("p");
+      activePara.innerHTML = `${data.activity}`;
+      activeDiv.appendChild(activePara);
+      document.body.appendChild(activeDiv);
+      console.log(data);
+    })
+    .catch((error) => {
+      let errorMessage = document.createElement("div");
+      errorMessage.innerHTML = `ERROR ERROR --> ${error}`;
+      document.body.appendChild(errorMessage);
+      console.log(error);
     });
 }
 
 function clearContainer() {
-  dateDiv.innerHTML = "";
+  activeDiv.innerHTML = "";
 }
