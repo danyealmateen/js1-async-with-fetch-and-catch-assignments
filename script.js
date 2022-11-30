@@ -310,8 +310,13 @@ button.addEventListener("click", (event) => {
 function getActivity() {
   let input = document.getElementById("input").value;
   let inputNumber = document.getElementById("inputNumber").value;
-  let url = `http://www.boredapi.com/api/activity?type=${input}&participants=${inputNumber}`;
-  console.log(inputNumber);
+  let checkbox = document.getElementById("checkbox");
+  const FREE = 0.0;
+
+  const price = checkbox.checked ? `&price=${FREE}` : "";
+
+  let url = `http://www.boredapi.com/api/activity?type=${input}&participants=${inputNumber}${price}`;
+
   fetch(url)
     .then((response) => response.json())
     .then((data) => {
