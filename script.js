@@ -115,7 +115,7 @@
 // ingBeer();
 
 //ASYNC MED FETCH UPPGIFTER
-//1.
+//1. DOG API
 //Använd ett form i html:en.
 //Använd infon från formuläret för att sätta ihop rätt url.
 //Använd i url:en i fetch.
@@ -156,26 +156,76 @@
 //   document.getElementById("container").innerHTML = "";
 // }
 
-//2. Låt användaren söka på en kategori och hämta ett random skämt i den kategorin. Visa skämtet.
+//2.CHUCK NORRIS Låt användaren söka på en kategori och hämta ett random skämt i den kategorin. Visa skämtet.
 
+// let button = document.getElementById("button");
+
+// button.addEventListener("click", (prevent) => {
+//   prevent.preventDefault();
+//   getChuckJokes();
+//   console.log("click");
+// });
+
+// function getChuckJokes() {
+//   let input = document.getElementById("input").value;
+//   let url = `https://api.chucknorris.io/jokes/random?category=${input}`;
+//   console.log(input);
+//   fetch(url)
+//     .then((response) => response.json())
+//     .then((data) => {
+//       let jokeDiv = document.createElement("div");
+//       jokeDiv.innerHTML = `${data.value}`;
+//       document.body.appendChild(jokeDiv);
+//       console.log(data.value);
+//     });
+// }
+
+//3.Låt en användare söka på öl genom att ange ett namn. Visa namn, bild och beskrivning för ett enda öl.
+
+//Hämtar in knappen.
 let button = document.getElementById("button");
 
-button.addEventListener("click", (prevent) => {
-  prevent.preventDefault();
-  getChuckJokes();
-  console.log("click");
+//Skapar en div och sätter ett ID.
+let beerDiv = document.createElement("div");
+beerDiv.setAttribute("id", "divven");
+
+//Skapar en paragraf.
+let beerPara = document.createElement("p");
+
+//När man klickar på knappen ska ett event och en funktion köras. Eventet (event) ska hindra sidan från att refresha och funktionen (getBeer()) hämtar API , bryter ner det , och renderar det till sidan.
+button.addEventListener("click", (event) => {
+  event.preventDefault();
+  getBeer();
 });
 
-function getChuckJokes() {
+//Funktionen
+function getBeer() {
+  //Ett inputvärde där användaren kan skriva in namnet på det de söker
   let input = document.getElementById("input").value;
-  let url = `https://api.chucknorris.io/jokes/random?category=${input}`;
+
+  //URL för att hämta API:et.
+  let url = `https://api.punkapi.com/v2/beers?beer_name=${input}`;
   console.log(input);
+
+  //Hämtar apiet
   fetch(url)
+    //Responset man får konverteras från json till js objekt.
+    //.then() är ett promise som representerar om den asynkroniska operationen failar eller inte samt visar resultatets värde.
     .then((response) => response.json())
     .then((data) => {
-      let jokeDiv = document.createElement("div");
-      jokeDiv.innerHTML = `${data.value}`;
-      document.body.appendChild(jokeDiv);
-      console.log(data.value);
+      //En forEach loop som går igenom datan vi hämtade och bryter arrayen till objekt.
+      data.forEach((obj) => {
+        //Paragrafen vi skapade innan skriver ut namn, beskrivning och en bild från objektet.
+        beerPara.innerHTML = `Name of beer: ${obj.name} <hr> ${obj.description} <hr> <img src="${obj.image_url}"/>`;
+        //Vi lägger till paragrafen i diven som vi skapade tidigare.
+        beerDiv.appendChild(beerPara);
+        //Vi lägger till diven till HTML sidan så att vi kan rendera.
+        document.body.appendChild(beerDiv);
+        console.log(data);
+      });
+    })
+    //.catch() returnerar också ett promise som triggas när failade operationer uppstår.
+    .catch((error) => {
+      console.log(error);
     });
 }
