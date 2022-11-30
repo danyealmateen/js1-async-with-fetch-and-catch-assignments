@@ -233,12 +233,13 @@
 //Låt en användare ange vilken mat som ska passa till ölen och sök fram öl som passar. Visa namnet för alla öl i svaret.
 let button = document.getElementById("button");
 let foodDiv = document.createElement("div");
-let foodPara = document.createElement("p");
+foodDiv.setAttribute("id", "foodDiv");
 
 button.addEventListener("click", (event) => {
   event.preventDefault();
   console.log("click");
   wichFood();
+  clearContainer();
 });
 
 function wichFood() {
@@ -248,7 +249,8 @@ function wichFood() {
     .then((response) => response.json())
     .then((data) => {
       data.forEach((obj) => {
-        foodPara.innerHTML += `Following beers go good with ${input} <hr> ${obj.name}`;
+        let foodPara = document.createElement("p");
+        foodPara.innerHTML = `Following beers go good with ${input} <hr> ${obj.name}`;
         console.log(obj.name);
         foodDiv.appendChild(foodPara);
         document.body.appendChild(foodDiv);
@@ -258,4 +260,8 @@ function wichFood() {
     .catch((error) => {
       console.log(error);
     });
+}
+
+function clearContainer() {
+  foodDiv.innerHTML = "";
 }
