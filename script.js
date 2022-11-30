@@ -231,37 +231,65 @@
 // }
 
 //Låt en användare ange vilken mat som ska passa till ölen och sök fram öl som passar. Visa namnet för alla öl i svaret.
+// let button = document.getElementById("button");
+// let foodDiv = document.createElement("div");
+// foodDiv.setAttribute("id", "foodDiv");
+
+// button.addEventListener("click", (event) => {
+//   event.preventDefault();
+//   wichFood();
+//   clearContainer();
+// });
+
+// function wichFood() {
+//   let input = document.getElementById("input").value;
+//   let url = `https://api.punkapi.com/v2/beers?food=${input}`;
+//   fetch(url)
+//     .then((response) => response.json())
+//     .then((data) => {
+//       data.forEach((obj) => {
+//         let foodPara = document.createElement("p");
+//         foodPara.innerHTML = `Following beers go good with ${input} <hr> ${obj.name}`;
+//         foodDiv.appendChild(foodPara);
+//         document.body.appendChild(foodDiv);
+//       });
+//     })
+//     .catch((error) => {
+//       console.log(error);
+//     });
+// }
+// function clearContainer() {
+//   foodDiv.innerHTML = "";
+// }
+
+//Låt användaren välja ett datum och visa namnet på alla öl som har bryggts innan det datumet.//brewed_before
+//https://api.punkapi.com/v2/beers?brewed_before=11-2012
+
 let button = document.getElementById("button");
-let foodDiv = document.createElement("div");
-foodDiv.setAttribute("id", "foodDiv");
+let dateDiv = document.createElement("div");
 
 button.addEventListener("click", (event) => {
   event.preventDefault();
-  console.log("click");
-  wichFood();
+  console.log("clicked!");
+  beerDate();
   clearContainer();
 });
 
-function wichFood() {
+function beerDate() {
   let input = document.getElementById("input").value;
-  let url = `https://api.punkapi.com/v2/beers?food=${input}`;
+  let url = `https://api.punkapi.com/v2/beers?brewed_before=?${input}`;
   fetch(url)
     .then((response) => response.json())
     .then((data) => {
       data.forEach((obj) => {
-        let foodPara = document.createElement("p");
-        foodPara.innerHTML = `Following beers go good with ${input} <hr> ${obj.name}`;
-        console.log(obj.name);
-        foodDiv.appendChild(foodPara);
-        document.body.appendChild(foodDiv);
+        let datePara = document.createElement("p");
+        datePara.innerHTML = `${obj.name}`;
+        dateDiv.appendChild(datePara);
+        document.body.appendChild(dateDiv);
       });
-      console.log(data);
-    })
-    .catch((error) => {
-      console.log(error);
     });
 }
 
 function clearContainer() {
-  foodDiv.innerHTML = "";
+  dateDiv.innerHTML = "";
 }
