@@ -1,7 +1,21 @@
 body {
   background-color: gray;
+  color: rgb(0, 229, 255);
 }
 
 #pic {
   width: 50%;
+}
+
+img {
+  width: 100px;
+}
+
+p {
+  display: block;
+  width: 250px;
+}
+
+span {
+  color: green;
 }
